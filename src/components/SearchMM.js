@@ -8,8 +8,9 @@ const API_KEY = "";
 
 const MUSIX_API_ROOT = "https://api.musixmatch.com/ws/1.1/";
 
-var words =
-  // "";
+// var separatedWordsArray = [];
+
+var spokenWords = // "";
   "Blinded by the light Revved up like a deuce Another runner in the night";
 // "Blinded%20by%20the%20light%20Revved%20up%20like%20a%20deuce%20Another%20runner%20in%20the%20night"; //Michael Mind Project
 // "I%20wanna%20dance%20with%20somebody%20I%20wanna%20feel%20the%20heat%20with%20somebody"; //Whitney Houston
@@ -20,7 +21,7 @@ class SearchMM extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // words: [],
+      // spokenWords: [],
       // matchingSentence: "",
     };
 
@@ -28,30 +29,27 @@ class SearchMM extends Component {
   }
 
   componentDidMount() {
-    // console.log(words);
+    // console.log(spokenWords);
   }
   componentDidUpdate() {
-    // console.log(words);
+    // console.log(spokenWords);
   }
 
-  handleInputChange = () => {
-    // for (var i = 0; this.state.words.length; i++) {
-    //   this.state.matchingSentence += this.state.words[i] + "%20";
-    // }
-  };
+  handleInputChange = () => {};
 
   onFormSubmit(event) {
     event.preventDefault();
+    var separateToIndividualStrings = spokenWords.split(" ");
+    var joinSeparatedWords = separateToIndividualStrings.join("%20");
+    console.log(joinSeparatedWords);
     const MUSIX_API_URL =
       MUSIX_API_ROOT +
       "track.search?q_lyrics=" +
-      // this.state.words +
-      words +
+      // this.state.spokenWords +
+      joinSeparatedWords + // this needs to be a string in order to make the call
       "&page_size=10&page=1&s_track_rating=desc&apikey=" +
       API_KEY;
     console.log(MUSIX_API_URL);
-
-    console.log(words);
   }
 
   render() {
@@ -61,18 +59,24 @@ class SearchMM extends Component {
           &nbsp; You Need At Least 10 Words To Match !!!EXACTLY!!! To Make It
           Work. &nbsp;
         </div>
+
         <Form>
           <Form.Group controlId="formBasicEmail">
+
             <Form.Label>&nbsp; Enter Lyrics &nbsp;</Form.Label>
+
             <Form.Control
               type="text"
               placeholder="Lyrics Go Here"
             ></Form.Control>
+
             <Button variant="primary" type="submit" onClick={this.onFormSubmit}>
               Submit
             </Button>
+
           </Form.Group>
         </Form>
+
       </>
     );
   }
