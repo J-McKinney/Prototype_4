@@ -42,7 +42,7 @@ class SearchMM extends Component {
   render() {
     return (
       <>
-        <div>You Need At Least 10 Words To Match !!!EXACTLY!!! To Make It Work!!!</div>
+        <div>You Need At Least 10 Words To Match !!!EXACTLY!!! To Make It Work.</div>
         <Form>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Enter Lyrics</Form.Label>
