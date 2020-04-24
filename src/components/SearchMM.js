@@ -8,10 +8,10 @@ const API_KEY = "";
 
 const MUSIX_API_ROOT = "https://api.musixmatch.com/ws/1.1/";
 
-// var separatedWordsArray = [];
+// var lyricsArray = [];
 
-var spokenWords = // "";
-  "Blinded by the light Revved up like a deuce Another runner in the night";
+// var spokenWords =  //"";
+// "Blinded by the light Revved up like a deuce Another runner in the night";
 // "Blinded%20by%20the%20light%20Revved%20up%20like%20a%20deuce%20Another%20runner%20in%20the%20night"; //Michael Mind Project
 // "I%20wanna%20dance%20with%20somebody%20I%20wanna%20feel%20the%20heat%20with%20somebody"; //Whitney Houston
 // "As%20I%20went%20down%20to%20the%20river%20to%20pray%20studying%20about%20that%20good%20ol%20way"; //Allison Krauss
@@ -21,35 +21,47 @@ class SearchMM extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // spokenWords: [],
-      // matchingSentence: "",
+      spokenWords: "",
     };
 
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
   componentDidMount() {
-    // console.log(spokenWords);
+    // console.log(this.state.spokenWords);
   }
   componentDidUpdate() {
-    // console.log(spokenWords);
+    // console.log(this.state.spokenWords);
   }
 
-  handleInputChange = () => {};
+  handleInputChange = (event) => {
+    let value = event.target.value;
+    const name = event.target.name;
+    this.setState({
+      [name]: value,
+    });
+  };
 
   onFormSubmit(event) {
     event.preventDefault();
-    var separateToIndividualStrings = spokenWords.split(" ");
-    var joinSeparatedWords = separateToIndividualStrings.join("%20");
-    console.log(joinSeparatedWords);
+    this.setState({
+      spokenWords: "",
+    });
+
+    // var separateToIndividualStrings = spokenWords.split(" ");
+    // var joinSeparatedWords = separateToIndividualStrings.join("%20");
+    // console.log(joinSeparatedWords);
+
     const MUSIX_API_URL =
       MUSIX_API_ROOT +
       "track.search?q_lyrics=" +
-      // this.state.spokenWords +
-      joinSeparatedWords + // this needs to be a string in order to make the call
+      this.state.spokenWords +
+      // joinSeparatedWords + // this needs to be a string in order to make the call
       "&page_size=10&page=1&s_track_rating=desc&apikey=" +
       API_KEY;
     console.log(MUSIX_API_URL);
+    // lyricsArray.push(joinSeparatedWords)
+    // console.log(lyricsArray)
   }
 
   render() {
@@ -61,22 +73,22 @@ class SearchMM extends Component {
         </div>
 
         <Form>
-          <Form.Group controlId="formBasicEmail">
-
+          <Form.Group controlId="lyricForm">
             <Form.Label>&nbsp; Enter Lyrics &nbsp;</Form.Label>
 
             <Form.Control
               type="text"
               placeholder="Lyrics Go Here"
-            ></Form.Control>
+              name="spokenWords"
+              onChange={this.handleInputChange}
+              value={this.state.spokenWords}
+            />
 
             <Button variant="primary" type="submit" onClick={this.onFormSubmit}>
               Submit
             </Button>
-
           </Form.Group>
         </Form>
-
       </>
     );
   }
