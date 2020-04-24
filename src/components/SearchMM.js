@@ -8,8 +8,6 @@ const API_KEY = "";
 
 const MUSIX_API_ROOT = "https://api.musixmatch.com/ws/1.1/";
 
-// var lyricsArray = [];
-
 // var spokenWords =  //"";
 // "Blinded by the light Revved up like a deuce Another runner in the night";
 // "Blinded%20by%20the%20light%20Revved%20up%20like%20a%20deuce%20Another%20runner%20in%20the%20night"; //Michael Mind Project
@@ -48,7 +46,7 @@ class SearchMM extends Component {
       spokenWords: "",
     });
 
-    // var separateToIndividualStrings = spokenWords.split(" ");
+    // var separateToIndividualStrings = this.state.spokenWords.split(" ");
     // var joinSeparatedWords = separateToIndividualStrings.join("%20");
     // console.log(joinSeparatedWords);
 
@@ -60,8 +58,13 @@ class SearchMM extends Component {
       "&page_size=10&page=1&s_track_rating=desc&apikey=" +
       API_KEY;
     console.log(MUSIX_API_URL);
-    // lyricsArray.push(joinSeparatedWords)
-    // console.log(lyricsArray)
+    this.separateFunction();
+  }
+
+  separateFunction() {
+    var separateToIndividualStrings = this.state.spokenWords.split(" ");
+    var joinSeparatedWords = separateToIndividualStrings.join("%20");
+    console.log(joinSeparatedWords);
   }
 
   render() {
@@ -71,11 +74,9 @@ class SearchMM extends Component {
           &nbsp; You Need At Least 10 Words To Match !!!EXACTLY!!! To Make It
           Work. &nbsp;
         </div>
-
         <Form>
           <Form.Group controlId="lyricForm">
             <Form.Label>&nbsp; Enter Lyrics &nbsp;</Form.Label>
-
             <Form.Control
               type="text"
               placeholder="Lyrics Go Here"
@@ -83,7 +84,6 @@ class SearchMM extends Component {
               onChange={this.handleInputChange}
               value={this.state.spokenWords}
             />
-
             <Button variant="primary" type="submit" onClick={this.onFormSubmit}>
               Submit
             </Button>
