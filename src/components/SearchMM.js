@@ -8,8 +8,8 @@ const API_KEY = "";
 
 const MUSIX_API_ROOT = "https://api.musixmatch.com/ws/1.1/";
 
-// var spokenWords = //"";
-// "Blinded by the light Revved up like a deuce Another runner in the night";
+var lyric = 
+"Blinded by the light Revved up like a deuce Another runner in the night";
 // "Blinded%20by%20the%20light%20Revved%20up%20like%20a%20deuce%20Another%20runner%20in%20the%20night"; //Michael Mind Project
 // "I%20wanna%20dance%20with%20somebody%20I%20wanna%20feel%20the%20heat%20with%20somebody"; //Whitney Houston
 // "As%20I%20went%20down%20to%20the%20river%20to%20pray%20studying%20about%20that%20good%20ol%20way"; //Allison Krauss
@@ -19,56 +19,67 @@ class SearchMM extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // spokenWords: "",
       lyrics: "",
     };
 
     this.onFormSubmit = this.onFormSubmit.bind(this);
+    // this.changeFunction = this.changeFunction.bind(this);
   }
 
+
   componentDidMount() {
-    // console.log(this.state.lyrics);
+    console.log("componentDidMount: " + this.state.lyrics);
   }
   componentDidUpdate() {
-    // console.log(this.state.lyrics);
+    // this.music()
+    console.log("componentDidUpdate: " + this.state.lyrics);
   }
 
   handleInputChange = (event) => {
-    let value = event.target.value;
     const name = event.target.name;
+    let value = event.target.value;
     this.setState({
       [name]: value,
     });
   };
 
+  // changeFunction(event) {
+  //   event.preventDefault();
+  //   this.setState({ lyrics: this.state.lyrics.split(" ").join("%20")});
+  //   console.log("changeFunction: " + this.state.lyrics);
+  //   // this.onFormSubmit()
+  // }
+
   onFormSubmit(event) {
     event.preventDefault();
+    // this.setState({ lyrics: this.state.lyrics.split(" ").join("%20")});
+
+    // this.changeFunction()
+    // this.music()
 
     // var separateToIndividualStrings = this.state.lyrics.split(" ");
     // var joinSeparatedWords = separateToIndividualStrings.join("%20");
     // this.setState({ lyrics: joinSeparatedWords });
 
-    // var spokenWords = "";
-    // var separateToIndividualStrings = spokenWords.split(" ");
-    // var joinSeparatedWords = separateToIndividualStrings.join("%20");
-    // console.log(joinSeparatedWords)
+    console.log("onFormSubmit: " + this.state.lyrics);
 
-    // var separateToIndividualStrings = this.state.spokenWords.split(" ");
-    // var joinSeparatedWords = separateToIndividualStrings.join("%20");
-    // this.setState({spokenWords: joinSeparatedWords})
-
-    // this.setState({
-    //   spokenWords: "",
-    // });
+    lyric = lyric.split(" ").join("%20");
 
     const MUSIX_API_URL =
       MUSIX_API_ROOT +
       "track.search?q_lyrics=" +
+      // joinSeparatedWords +
       // this.state.spokenWords +
-      this.state.lyrics +
-      "&page_size=10&page=1&s_track_rating=desc&apikey=" +
+      // this.state.lyrics +
+      lyric +
+      // this.setState({ lyrics: this.state.lyrics.split(" ").join("%20")}) +
+      "&page_size=1&page=1&s_track_rating=desc&apikey=" +
       API_KEY;
-    console.log(MUSIX_API_URL);
+    console.log("MusicAPI: " + MUSIX_API_URL);
+    // Clear the input field
+    // this.setState({
+    //   lyrics: "",
+    // });
   }
 
   render() {
@@ -85,9 +96,10 @@ class SearchMM extends Component {
               type="text"
               placeholder="Lyrics Go Here"
               name="lyrics"
+              // value={this.spokenWords}
               onChange={this.handleInputChange}
               value={this.state.lyrics}
-            />
+            ></Form.Control>
             <Button variant="primary" type="submit" onClick={this.onFormSubmit}>
               Submit
             </Button>
