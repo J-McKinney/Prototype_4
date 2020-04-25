@@ -33,11 +33,15 @@ class SearchMM extends Component {
     // this.change()
   };
 
-  // change = () => {
-  //   this.setState({
-  //     form: this.state.lyrics.split(" ").join("%20"),
-  //   });
-  // };
+  change = (e) => {
+    e.preventDefault();
+    this.setState(
+      {
+        form: this.state.lyrics.split(" ").join("%20"),
+      }
+      // this.handleSubmit()
+    );
+  };
 
   handleSubmit(e) {
     e.preventDefault();
@@ -69,18 +73,23 @@ class SearchMM extends Component {
                 this.setState({
                   lyrics: e.target.value,
 
-                  // below changes the format into what I need still doesn't 
+                  // below changes the format into what I need still doesn't
                   // include the last letter unless you press space after
                   form: this.state.lyrics.split(" ").join("%20"),
 
-                  // copies this.state exactly but doesn't render it to 
+                  // copies this.state exactly but doesn't render it to
                   // the MM-API coreectly to get data back
                   // form: e.target.value,
                 })
               }
               value={this.state.lyrics}
             ></Form.Control>
-            <Button type="submit" value="Submit" disabled={!this.state.lyrics}>
+            <Button
+              type="submit"
+              value="Submit"
+              disabled={!this.state.lyrics}
+              // onClick={this.handleSubmit}
+            >
               Submit
             </Button>
           </Form.Group>
