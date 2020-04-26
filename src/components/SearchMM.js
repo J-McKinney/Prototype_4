@@ -14,17 +14,28 @@ class SearchMM extends Component {
     super(props);
     this.state = {
       lyrics: "",
-      form: "",
+      format: "",
+      track: "",
+      artist: "",
+      album: "",
+      url: "",
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidUpdate() {
+    console.log("track: " + this.state.track)
+    console.log("artist: " + this.state.artist)
+    console.log("album: " + this.state.album)
+    console.log("url: " + this.state.url)
+  }
+
   handleChange = (e) => {
     this.setState({
       lyrics: e.target.value,
-      form: e.target.value,
+      format: e.target.value,
     });
   };
 
@@ -36,27 +47,40 @@ class SearchMM extends Component {
     const MUSIX_API_URL =
       MUSIX_API_ROOT +
       "track.search?q_lyrics=" +
-      this.state.form +
+      this.state.format +
       // changing the &page_size=1 to any other number will add other tracks to the json list
       // changing &page=1 to any other number will add more info to single tracks on the json list
       "&page_size=1&page=1&s_track_rating=desc&apikey=" +
       API_KEY;
-    // console.log("MusicAPI: " + MUSIX_API_URL);
-    // THIS HAS MY API_KEY IN IT!!!
-    // document.getElementById("link").innerHTML = MUSIX_API_URL;
-
     axios
       .get(CORS + MUSIX_API_URL)
       .then(function (response) {
-        console.log("\n" + response.data.message.body.track_list[0].track.track_name);
-        console.log("\n" + response.data.message.body.track_list[0].track.artist_name);
-        console.log("\n" + response.data.message.body.track_list[0].track.album_name);
-        console.log("\n" + response.data.message.body.track_list[0].track.track_share_url);
+        // console.log(response)
+        console.log(
+          "\n" + response.data.message.body.track_list[0].track.track_name
+        );
+        console.log(
+          "\n" + response.data.message.body.track_list[0].track.artist_name
+        );
+        console.log(
+          "\n" + response.data.message.body.track_list[0].track.album_name
+        );
+        console.log(
+          "\n" + response.data.message.body.track_list[0].track.track_share_url
+        );
+
+        // this.setState({
+        //   track: response.data.message.body.track_list[0].track.track_name,
+        //   artist: response.data.message.body.track_list[0].track.artist_name,
+        //   album: response.data.message.body.track_list[0].track.album_name,
+        //   url: response.data.message.body.track_list[0].track.track_share_url,
+        // });
+
       })
       .catch(function (error) {
         console.log(error);
       });
-
+    // document.getElementById("link").innerHTML = MUSIX_API_URL;
   }
 
   render() {
@@ -75,7 +99,7 @@ class SearchMM extends Component {
               onChange={(e) =>
                 this.setState({
                   lyrics: e.target.value,
-                  form: e.target.value,
+                  format: e.target.value,
                 })
               }
               value={this.state.lyrics}
@@ -88,7 +112,7 @@ class SearchMM extends Component {
                 // callback function to re-render the DOM and reformat users input for MusixMatch API
                 this.setState(
                   (previous) => ({
-                    form: this.state.lyrics.split(" ").join("%20") + "",
+                    format: this.state.lyrics.split(" ").join("%20") + "",
                   }),
                   console.log()
                 )
