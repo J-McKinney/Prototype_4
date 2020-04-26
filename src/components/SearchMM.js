@@ -5,7 +5,7 @@ import "./SearchMM.css";
 require("dotenv").config();
 
 const API_KEY = "";
-
+// let spokenWords = "";
 const MUSIX_API_ROOT = "https://api.musixmatch.com/ws/1.1/";
 
 class SearchMM extends Component {
@@ -20,31 +20,18 @@ class SearchMM extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentDidUpdate() {
-    console.log("componentDidUpdate:lyrics " + this.state.lyrics);
-    console.log("componentDidUpdate:form " + this.state.form);
-  }
-
   handleChange = (e) => {
     this.setState({
       lyrics: e.target.value,
       form: e.target.value,
     });
-    // this.change()
-  };
-
-  change = (e) => {
-    e.preventDefault();
-    this.setState(
-      {
-        form: this.state.lyrics.split(" ").join("%20"),
-      }
-      // this.handleSubmit()
-    );
   };
 
   handleSubmit(e) {
     e.preventDefault();
+    this.setState({
+      lyrics: "",
+    });
     const MUSIX_API_URL =
       MUSIX_API_ROOT +
       "track.search?q_lyrics=" +
@@ -65,21 +52,14 @@ class SearchMM extends Component {
         </div>
         <Form onSubmit={this.handleSubmit}>
           <Form.Group controlId="lyricForm">
-            <Form.Label>&nbsp; Enter Lyrics &nbsp;</Form.Label>
+            <Form.Label>&nbsp; Enter Lyrics: &nbsp;</Form.Label>
             <Form.Control
               type="text"
               placeholder="Lyrics Go Here"
               onChange={(e) =>
                 this.setState({
                   lyrics: e.target.value,
-
-                  // below changes the format into what I need still doesn't
-                  // include the last letter unless you press space after
-                  form: this.state.lyrics.split(" ").join("%20"),
-
-                  // copies this.state exactly but doesn't render it to
-                  // the MM-API coreectly to get data back
-                  // form: e.target.value,
+                  form: e.target.value,
                 })
               }
               value={this.state.lyrics}
@@ -88,7 +68,15 @@ class SearchMM extends Component {
               type="submit"
               value="Submit"
               disabled={!this.state.lyrics}
-              // onClick={this.handleSubmit}
+              onClick={() =>
+                // callback function to re-render the DOM and reformat users input for MusixMatch API
+                this.setState(
+                  (previous) => ({
+                    form: this.state.lyrics.split(" ").join("%20") + "",
+                  }),
+                  console.log(this.state.form)
+                )
+              }
             >
               Submit
             </Button>
