@@ -26,10 +26,10 @@ class SearchMM extends Component {
   }
 
   componentDidUpdate() {
-    console.log("track: " + this.state.track)
-    console.log("artist: " + this.state.artist)
-    console.log("album: " + this.state.album)
-    console.log("url: " + this.state.url)
+    console.log("track: " + this.state.track);
+    console.log("artist: " + this.state.artist);
+    console.log("album: " + this.state.album);
+    console.log("url: " + this.state.url);
   }
 
   handleChange = (e) => {
@@ -52,38 +52,28 @@ class SearchMM extends Component {
       // changing &page=1 to any other number will add more info to single tracks on the json list
       "&page_size=1&page=1&s_track_rating=desc&apikey=" +
       API_KEY;
+
     axios
       .get(CORS + MUSIX_API_URL)
-      .then(function (response) {
-        // console.log(response)
-        console.log(
-          "\n" + response.data.message.body.track_list[0].track.track_name
-        );
-        console.log(
-          "\n" + response.data.message.body.track_list[0].track.artist_name
-        );
-        console.log(
-          "\n" + response.data.message.body.track_list[0].track.album_name
-        );
-        console.log(
-          "\n" + response.data.message.body.track_list[0].track.track_share_url
-        );
-
-        // this.setState({
-        //   track: response.data.message.body.track_list[0].track.track_name,
-        //   artist: response.data.message.body.track_list[0].track.artist_name,
-        //   album: response.data.message.body.track_list[0].track.album_name,
-        //   url: response.data.message.body.track_list[0].track.track_share_url,
-        // });
-
+      .then((response) => {
+        this.setState({
+          track: response.data.message.body.track_list[0].track.track_name,
+          artist: response.data.message.body.track_list[0].track.artist_name,
+          album: response.data.message.body.track_list[0].track.album_name,
+          url: response.data.message.body.track_list[0].track.track_share_url,
+        });
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
       });
-    // document.getElementById("link").innerHTML = MUSIX_API_URL;
+    document.getElementById("trackName").innerHTML = this.state.track;
+    document.getElementById("artistName").innerHTML = this.state.artist;
+    document.getElementById("albumName").innerHTML = this.state.album;
+    // document.getElementById("link").innerHTML = this.state.url;
   }
 
   render() {
+    const { track, artist, album, url } = this.state;
     return (
       <>
         <div>
@@ -123,10 +113,16 @@ class SearchMM extends Component {
           </Form.Group>
         </Form>
         <hr />
-        <div id="trackName" />
-        <div id="artistName" />
-        <div id="albumName" />
-        <div id="link" />
+        <div id="trackName">{track}</div>
+        <div id="artistName">{artist}</div>
+        <div id="albumName">{album}</div>
+        <div>
+          {this.state.url ? (
+            <a href={url}>Content</a>
+          ) : (
+            ""
+          )}
+        </div>
       </>
     );
   }
