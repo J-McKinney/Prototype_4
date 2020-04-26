@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-// import axios from "axios";
+import axios from "axios";
 import "./SearchMM.css";
 require("dotenv").config();
 
 const API_KEY = "";
 const MUSIX_API_ROOT = "https://api.musixmatch.com/ws/1.1/";
+const CORS = "https://cors-anywhere.herokuapp.com/";
 
 class SearchMM extends Component {
   constructor(props) {
@@ -40,18 +41,22 @@ class SearchMM extends Component {
       // changing &page=1 to any other number will add more info to single tracks on the json list
       "&page_size=1&page=1&s_track_rating=desc&apikey=" +
       API_KEY;
-    console.log("MusicAPI: " + MUSIX_API_URL);
+    // console.log("MusicAPI: " + MUSIX_API_URL);
     // THIS HAS MY API_KEY IN IT!!!
     // document.getElementById("link").innerHTML = MUSIX_API_URL;
 
-    // axios
-    //   .get(MUSIX_API_URL)
-    //   .then(function (response) {
-    //     console.log(response);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error)
-    //   });
+    axios
+      .get(CORS + MUSIX_API_URL)
+      .then(function (response) {
+        console.log("\n" + response.data.message.body.track_list[0].track.track_name);
+        console.log("\n" + response.data.message.body.track_list[0].track.artist_name);
+        console.log("\n" + response.data.message.body.track_list[0].track.album_name);
+        console.log("\n" + response.data.message.body.track_list[0].track.track_share_url);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
   }
 
   render() {
