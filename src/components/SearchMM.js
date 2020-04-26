@@ -5,7 +5,8 @@ import axios from "axios";
 import "./SearchMM.css";
 require("dotenv").config();
 
-const API_KEY = "";
+// const API_KEY = `${process.env.REACT_APP_MM_KEY}`;
+// const API_KEY = "";
 const MUSIX_API_ROOT = "https://api.musixmatch.com/ws/1.1/";
 const CORS = "https://cors-anywhere.herokuapp.com/";
 
@@ -51,7 +52,7 @@ class SearchMM extends Component {
       // changing the &page_size=1 to any other number will add other tracks to the json list
       // changing &page=1 to any other number will add more info to single tracks on the json list
       "&page_size=1&page=1&s_track_rating=desc&apikey=" +
-      API_KEY;
+      process.env.API_KEY;
 
     axios
       .get(CORS + MUSIX_API_URL)
@@ -116,13 +117,7 @@ class SearchMM extends Component {
         <div id="trackName">{track}</div>
         <div id="artistName">{artist}</div>
         <div id="albumName">{album}</div>
-        <div>
-          {this.state.url ? (
-            <a href={url}>Content</a>
-          ) : (
-            ""
-          )}
-        </div>
+        <div>{this.state.url ? <a href={url}>Content</a> : ""}</div>
       </>
     );
   }

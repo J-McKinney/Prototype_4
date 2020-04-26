@@ -1,7 +1,7 @@
 import React from "react";
 import SearchMM from "./components/SearchMM";
 import "./App.css";
-require('dotenv').config();
+require("dotenv").config();
 
 function App() {
   return (
