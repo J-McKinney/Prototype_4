@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
+// import dotenv from "dotenv";
 import "./SearchMM.css";
 require("dotenv").config();
 
@@ -52,7 +53,7 @@ class SearchMM extends Component {
       // changing the &page_size=1 to any other number will add other tracks to the json list
       // changing &page=1 to any other number will add more info to single tracks on the json list
       "&page_size=1&page=1&s_track_rating=desc&apikey=" +
-      process.env.API_KEY;
+      process.env.REACT_APP_MM_KEY;
 
     axios
       .get(CORS + MUSIX_API_URL)
