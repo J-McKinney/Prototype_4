@@ -2,12 +2,9 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
-// import dotenv from "dotenv";
 import "./SearchMM.css";
 require("dotenv").config();
 
-// const API_KEY = `${process.env.REACT_APP_MM_KEY}`;
-// const API_KEY = "";
 const MUSIX_API_ROOT = "https://api.musixmatch.com/ws/1.1/";
 const CORS = "https://cors-anywhere.herokuapp.com/";
 
@@ -25,13 +22,6 @@ class SearchMM extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentDidUpdate() {
-    console.log("track: " + this.state.track);
-    console.log("artist: " + this.state.artist);
-    console.log("album: " + this.state.album);
-    console.log("url: " + this.state.url);
   }
 
   handleChange = (e) => {
@@ -71,7 +61,6 @@ class SearchMM extends Component {
     document.getElementById("trackName").innerHTML = this.state.track;
     document.getElementById("artistName").innerHTML = this.state.artist;
     document.getElementById("albumName").innerHTML = this.state.album;
-    // document.getElementById("link").innerHTML = this.state.url;
   }
 
   render() {
@@ -118,7 +107,7 @@ class SearchMM extends Component {
         <div id="trackName">{track}</div>
         <div id="artistName">{artist}</div>
         <div id="albumName">{album}</div>
-        <div>{this.state.url ? <a href={url}>Content</a> : ""}</div>
+        <div>{this.state.url ? <a href={url}>Link To Lyrics</a> : ""}</div>
       </>
     );
   }
