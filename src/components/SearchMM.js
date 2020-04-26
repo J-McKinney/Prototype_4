@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+// import axios from "axios";
 import "./SearchMM.css";
 require("dotenv").config();
 
 const API_KEY = "";
-// let spokenWords = "";
 const MUSIX_API_ROOT = "https://api.musixmatch.com/ws/1.1/";
 
 class SearchMM extends Component {
@@ -41,6 +41,17 @@ class SearchMM extends Component {
       "&page_size=1&page=1&s_track_rating=desc&apikey=" +
       API_KEY;
     console.log("MusicAPI: " + MUSIX_API_URL);
+    // THIS HAS MY API_KEY IN IT!!!
+    // document.getElementById("link").innerHTML = MUSIX_API_URL;
+
+    // axios
+    //   .get(MUSIX_API_URL)
+    //   .then(function (response) {
+    //     console.log(response);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error)
+    //   });
   }
 
   render() {
@@ -74,7 +85,7 @@ class SearchMM extends Component {
                   (previous) => ({
                     form: this.state.lyrics.split(" ").join("%20") + "",
                   }),
-                  console.log(this.state.form)
+                  console.log()
                 )
               }
             >
@@ -82,8 +93,11 @@ class SearchMM extends Component {
             </Button>
           </Form.Group>
         </Form>
-        <br />
-        <div id="artistLink" />
+        <hr />
+        <div id="trackName" />
+        <div id="artistName" />
+        <div id="albumName" />
+        <div id="link" />
       </>
     );
   }
