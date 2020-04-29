@@ -50,7 +50,6 @@ class SearchMM extends Component {
     axios
       .get(CORS + MUSIX_API_ARTIST_INFO)
       .then((response) => {
-        console.log(response);
         this.setState({
           track: response.data.message.body.track_list[0].track.track_name,
           artist: response.data.message.body.track_list[0].track.artist_name,
@@ -78,7 +77,6 @@ class SearchMM extends Component {
     axios
       .get(CORS + MUSIX_API_SONG_LYRICS)
       .then((response) => {
-        // console.log(response.data.message.body.lyrics.lyrics_body);
         this.setState({
           songLyrics: response.data.message.body.lyrics.lyrics_body,
         });
@@ -127,7 +125,9 @@ class SearchMM extends Component {
             >
               Submit
             </Button>
-            <Button onClick={this.handleLyrics} disabled={!this.state.track}>Lyrics</Button>
+            <Button onClick={this.handleLyrics} disabled={!this.state.track}>
+              Lyrics
+            </Button>
           </Form.Group>
         </Form>
         <hr />
