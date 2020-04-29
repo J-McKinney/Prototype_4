@@ -18,11 +18,13 @@ class SearchMM extends Component {
       artist: "",
       album: "",
       url: "",
+      trackID: "",
       songLyrics: "",
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleLyrics = this.handleLyrics.bind(this);
   }
 
   handleChange = (e) => {
@@ -37,7 +39,7 @@ class SearchMM extends Component {
     this.setState({
       lyrics: "",
     });
-    const MUSIX_API_URL =
+    const MUSIX_API_ARTIST_INFO =
       MUSIX_API_ROOT +
       "track.search?q_lyrics=" +
       this.state.format +
@@ -45,15 +47,16 @@ class SearchMM extends Component {
       // changing &page=1 to any other number will add more info to single tracks on the json list
       "&page_size=1&page=1&s_track_rating=desc&apikey=" +
       process.env.REACT_APP_MM_KEY;
-
     axios
-      .get(CORS + MUSIX_API_URL)
+      .get(CORS + MUSIX_API_ARTIST_INFO)
       .then((response) => {
+        console.log(response);
         this.setState({
           track: response.data.message.body.track_list[0].track.track_name,
           artist: response.data.message.body.track_list[0].track.artist_name,
           album: response.data.message.body.track_list[0].track.album_name,
           url: response.data.message.body.track_list[0].track.track_share_url,
+          trackID: response.data.message.body.track_list[0].track.track_id,
         });
       })
       .catch((error) => {
@@ -64,8 +67,30 @@ class SearchMM extends Component {
     document.getElementById("albumName").innerHTML = this.state.album;
   }
 
+  handleLyrics(e) {
+    e.preventDefault();
+    const MUSIX_API_SONG_LYRICS =
+      MUSIX_API_ROOT +
+      "track.lyrics.get?track_id=" +
+      this.state.trackID +
+      "&apikey=" +
+      process.env.REACT_APP_MM_KEY;
+    axios
+      .get(CORS + MUSIX_API_SONG_LYRICS)
+      .then((response) => {
+        // console.log(response.data.message.body.lyrics.lyrics_body);
+        this.setState({
+          songLyrics: response.data.message.body.lyrics.lyrics_body,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    document.getElementById("songLyrics").innerHTML = this.state.songLyrics;
+  }
+
   render() {
-    const { track, artist, album, url } = this.state;
+    const { track, artist, album, url, songLyrics } = this.state;
     return (
       <>
         <div>
@@ -102,9 +127,7 @@ class SearchMM extends Component {
             >
               Submit
             </Button>
-            <Button disabled={!this.state.lyrics}>
-              Get Lyrics
-            </Button>
+            <Button onClick={this.handleLyrics} disabled={!this.state.track}>Lyrics</Button>
           </Form.Group>
         </Form>
         <hr />
@@ -112,7 +135,7 @@ class SearchMM extends Component {
         <div id="artistName">{artist}</div>
         <div id="albumName">{album}</div>
         <div>{this.state.url ? <a href={url}>Link To Lyrics</a> : ""}</div>
-        <div id="wordsToSong">{}</div>
+        <div id="songLyrics">{songLyrics}</div>
       </>
     );
   }
