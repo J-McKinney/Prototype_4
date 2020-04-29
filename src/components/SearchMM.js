@@ -18,6 +18,7 @@ class SearchMM extends Component {
       artist: "",
       album: "",
       url: "",
+      songLyrics: "",
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -101,6 +102,9 @@ class SearchMM extends Component {
             >
               Submit
             </Button>
+            <Button disabled={!this.state.lyrics}>
+              Get Lyrics
+            </Button>
           </Form.Group>
         </Form>
         <hr />
@@ -108,6 +112,7 @@ class SearchMM extends Component {
         <div id="artistName">{artist}</div>
         <div id="albumName">{album}</div>
         <div>{this.state.url ? <a href={url}>Link To Lyrics</a> : ""}</div>
+        <div id="wordsToSong">{}</div>
       </>
     );
   }
