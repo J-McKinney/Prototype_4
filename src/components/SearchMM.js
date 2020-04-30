@@ -23,8 +23,6 @@ class SearchMM extends Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    // this.handleArtistInfo = this.handleArtistInfo.bind(this);
-    // this.handleSongLyrics = this.handleSongLyrics.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -35,60 +33,6 @@ class SearchMM extends Component {
     });
   };
 
-  // handleArtistInfo(e) {
-  //   e.preventDefault();
-  //   this.setState({
-  //     lyrics: "",
-  //   });
-  // const MUSIX_API_ARTIST_INFO =
-  //   MUSIX_API_ROOT +
-  //   "track.search?q_lyrics=" +
-  //   this.state.format +
-  //   // changing the &page_size=1 to any other number will add other tracks to the json list
-  //   // changing &page=1 to any other number will add more info to single tracks on the json list
-  //   "&page_size=1&page=1&s_track_rating=desc&apikey=" +
-  //   process.env.REACT_APP_MM_KEY;
-  // axios
-  //   .get(CORS + MUSIX_API_ARTIST_INFO)
-  //   .then((response) => {
-  //     this.setState({
-  //       track: response.data.message.body.track_list[0].track.track_name,
-  //       artist: response.data.message.body.track_list[0].track.artist_name,
-  //       album: response.data.message.body.track_list[0].track.album_name,
-  //       url: response.data.message.body.track_list[0].track.track_share_url,
-  //       trackID: response.data.message.body.track_list[0].track.track_id,
-  //     });
-  //   })
-  // .catch((error) => {
-  //   console.log(error);
-  // });
-  //   document.getElementById("trackName").innerHTML = this.state.track;
-  //   document.getElementById("artistName").innerHTML = this.state.artist;
-  //   document.getElementById("albumName").innerHTML = this.state.album;
-  // }
-
-  // handleSongLyrics(e) {
-  //   e.preventDefault();
-  // const MUSIX_API_SONG_LYRICS =
-  //   MUSIX_API_ROOT +
-  //   "track.lyrics.get?track_id=" +
-  //   this.state.trackID +
-  //   "&apikey=" +
-  //   process.env.REACT_APP_MM_KEY;
-  // axios
-  //   .get(CORS + MUSIX_API_SONG_LYRICS)
-  //   .then((response) => {
-  //     this.setState({
-  //       songLyrics: response.data.message.body.lyrics.lyrics_body,
-  //     });
-  //   })
-  //   .catch((error) => {
-  //     console.log(error);
-  //   });
-  // document.getElementById("songLyrics").innerHTML = this.state.songLyrics;
-  // }
-
-  // Need to chain these promises: handleArtistInfo, handleSongLyrics
   handleSubmit(e) {
     e.preventDefault();
     const MUSIX_API_ARTIST_INFO =
@@ -137,10 +81,7 @@ class SearchMM extends Component {
           &nbsp; You Need At Least 10 Words To Match !!!EXACTLY!!! To Make It
           Work. &nbsp;
         </div>
-        <Form
-          //  onSubmit={this.handleArtistInfo}
-          onSubmit={this.handleSubmit}
-        >
+        <Form onSubmit={this.handleSubmit}>
           <Form.Group controlId="lyricForm">
             <Form.Label>&nbsp; Enter Lyrics: &nbsp;</Form.Label>
             <Form.Control
