@@ -43,7 +43,6 @@ class SearchMM extends Component {
       // changing &page=1 to any other number will add more info to single tracks on the json list
       "&page_size=1&page=1&s_track_rating=desc&apikey=" +
       process.env.REACT_APP_MM_KEY;
-
     axios
       .get(CORS + MUSIX_API_ARTIST_INFO)
       .then((response) => {
